@@ -1,0 +1,50 @@
+---
+layout: single
+permalink: /openapi/
+classes: wide
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swagger UI</title>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
+</head>
+<body>
+  <div id="swagger-ui"></div>
+
+  <textarea id="swagger-json" placeholder="Paste your OpenAPI specification JSON here" style="width:100%; height:200px; margin: 20px 0;"></textarea>
+  <button onclick="loadSpec()" style="display:block; margin-bottom: 20px;">Visualize</button>
+
+  <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"></script>
+  
+  <script>
+    let ui = SwaggerUIBundle({
+      dom_id: '#swagger-ui',
+      presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+      layout: "BaseLayout",  // Hide the topbar by using the BaseLayout
+    });
+
+    function loadSpec() {
+      const spec = document.getElementById('swagger-json').value;
+      try {
+        const jsonSpec = JSON.parse(spec);
+
+        // Reinitialize Swagger UI with the new spec
+        ui = SwaggerUIBundle({
+          spec: jsonSpec,
+          dom_id: '#swagger-ui',
+          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+          layout: "BaseLayout",  // Hide the topbar here as well
+        });
+      } catch (error) {
+        alert("Invalid JSON. Please check your OpenAPI specification.");
+      }
+    }
+  </script>
+</body>
+</html>
+
+

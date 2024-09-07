@@ -1,0 +1,19 @@
+
+docs:
+  - title: JSON Generators
+    children:
+      - title: "Create Topic/Rolebinding"
+        url: /about/
+  
+  - title: Open API specification
+    children:
+      - title: "Visualizer"
+        url: /openapi/
+
+  - title: Extras
+    children:
+      - title: "Stylesheets"
+        url: /docs/stylesheets/
+      - title: "JavaScript"
+        url: /docs/javascript/
+
