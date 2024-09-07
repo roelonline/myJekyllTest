@@ -14,6 +14,16 @@ classes: wide
 <body>
   <div id="swagger-ui"></div>
 
+  <!-- Dropdown to select an existing OpenAPI spec -->
+  <select id="spec-select" style="margin: 20px 0; display: block;" onchange="loadSelectedSpec()">
+    <option value="">Select an OpenAPI spec...</option>
+    <option value="./specs/spec1.json">API Spec 1</option>
+    <option value="specs/spec2.json">API Spec 2</option>
+    <option value="specs/spec3.json">API Spec 3</option>
+    <!-- Add more specs as needed -->
+  </select>
+
+  <!-- Textarea to allow pasting OpenAPI specification JSON -->
   <textarea id="swagger-json" placeholder="Paste your OpenAPI specification JSON here" style="width:100%; height:200px; margin: 20px 0;"></textarea>
   <button onclick="loadSpec()" style="display:block; margin-bottom: 20px;">Visualize</button>
 
@@ -21,12 +31,14 @@ classes: wide
   <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"></script>
   
   <script>
+    // Initialize Swagger UI
     let ui = SwaggerUIBundle({
       dom_id: '#swagger-ui',
       presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
       layout: "BaseLayout",  // Hide the topbar by using the BaseLayout
     });
 
+    // Function to load spec from textarea
     function loadSpec() {
       const spec = document.getElementById('swagger-json').value;
       try {
@@ -41,6 +53,33 @@ classes: wide
         });
       } catch (error) {
         alert("Invalid JSON. Please check your OpenAPI specification.");
+      }
+    }
+
+    // Function to load selected spec from the dropdown
+    function loadSelectedSpec() {
+      const selectedSpec = document.getElementById('spec-select').value;
+      
+      if (selectedSpec) {
+        fetch(selectedSpec)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("Failed to load spec");
+            }
+            return response.json();
+          })
+          .then(jsonSpec => {
+            // Reinitialize Swagger UI with the fetched spec
+            ui = SwaggerUIBundle({
+              spec: jsonSpec,
+              dom_id: '#swagger-ui',
+              presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+              layout: "BaseLayout",  // Hide the topbar here as well
+            });
+          })
+          .catch(error => {
+            alert("Error loading the spec: " + error.message);
+          });
       }
     }
   </script>

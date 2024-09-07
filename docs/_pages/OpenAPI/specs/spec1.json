@@ -1,0 +1,200 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "XSD Conversion",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/EVAFraudCheckRequest": {
+        "post": {
+          "summary": "Operation for EVAFraudCheckRequest",
+          "operationId": "EVAFraudCheckRequestOperation",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EVAFraudCheckRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EVAFraudCheckResponseType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/CombiBKRCheckRequest": {
+        "post": {
+          "summary": "Operation for CombiBKRCheckRequest",
+          "operationId": "CombiBKRCheckRequestOperation",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CombiBKRCheckRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CombiBKRCheckResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/VISFraudCheckRequest": {
+        "post": {
+          "summary": "Operation for VISFraudCheckRequest",
+          "operationId": "VISFraudCheckRequestOperation",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VISFraudCheckRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/VISFraudCheckResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "NaturalPersonRequestType": {
+          "type": "object",
+          "properties": {
+            "prefixText": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "dateOfBirth": {
+              "type": "string"
+            },
+            "reference": {
+              "type": "string"
+            }
+          }
+        },
+        "EVAFraudCheckRequest": {
+          "type": "object",
+          "properties": {
+            "naturalPerson": {
+              "$ref": "#/components/schemas/NaturalPersonRequestType"
+            }
+          }
+        },
+        "VISCheckRequestType": {
+          "type": "object",
+          "properties": {
+            "reference": {
+              "type": "string"
+            },
+            "documentType": {
+              "type": "string"
+            },
+            "documentNumber": {
+              "type": "string"
+            },
+            "documentCountry": {
+              "type": "string"
+            },
+            "DateOfBirth": {
+              "type": "string"
+            }
+          }
+        },
+        "CombiBKRCheckRequest": {
+          "$ref": "#/components/schemas/CombiBKRCheckRequest"
+        },
+        "naturalPerson": {
+          "$ref": "#/components/schemas/NaturalPersonRequestType"
+        },
+        "VISFraudCheckRequest": {
+          "$ref": "#/components/schemas/VISCheckRequestType"
+        },
+        "EVAFraudCheckResponseType": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "hitEVA": {
+              "type": "boolean"
+            },
+            "hitSFH": {
+              "type": "boolean"
+            }
+          }
+        },
+        "VISCheckResponseType": {
+          "type": "object",
+          "properties": {
+            "Reference": {
+              "type": "string"
+            },
+            "Timestamp": {
+              "type": "string"
+            },
+            "resultCode": {
+              "type": "integer"
+            },
+            "resultRegister": {
+              "type": "string"
+            },
+            "resultDescription": {
+              "type": "string"
+            },
+            "resultDescriptionExtended": {
+              "type": "string"
+            },
+            "priorNumberOfInquiries": {
+              "type": "integer"
+            },
+            "responseTraceId": {
+              "type": "string"
+            }
+          }
+        },
+        "CombiBKRCheckResponse": {
+          "$ref": "#/components/schemas/CombiBKRCheckResponse"
+        },
+        "EVAFraudCheckResponse": {
+          "$ref": "#/components/schemas/EVAFraudCheckResponseType"
+        },
+        "VISFraudCheckResponse": {
+          "$ref": "#/components/schemas/VISCheckResponseType"
+        }
+      }
+    }
+  }
