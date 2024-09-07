@@ -3,6 +3,7 @@ layout: single
 permalink: /openapi/
 classes: wide
 ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,11 +17,15 @@ classes: wide
 
   <!-- Dropdown to select an existing OpenAPI spec -->
   <select id="spec-select" style="margin: 20px 0; display: block;" onchange="loadSelectedSpec()">
-    <option value="">Select an OpenAPI spec...</option>
-    <option value="./specs/spec1.json">API Spec 1</option>
-    <option value="specs/spec2.json">API Spec 2</option>
-    <option value="specs/spec3.json">API Spec 3</option>
-    <!-- Add more specs as needed -->
+    <option value="">Select an existing OpenAPI spec (or paste your own json below)</option>
+
+    <!-- Liquid to dynamically populate the dropdown with JSON files -->
+    {% for file in site.static_files %}
+      {% if file.path contains '/_pages/OpenAPI/specs/' and file.extname == '.json' %}
+        <option value="../{{ file.path }}">{{ file.name | split: '.' | first }}</option>
+      {% endif %}
+    {% endfor %}
+
   </select>
 
   <!-- Textarea to allow pasting OpenAPI specification JSON -->
@@ -85,5 +90,3 @@ classes: wide
   </script>
 </body>
 </html>
-
-

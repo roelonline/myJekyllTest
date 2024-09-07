@@ -10,10 +10,8 @@ docs:
       - title: "Visualizer"
         url: /openapi/
 
-  - title: Extras
+  - title: Help
     children:
-      - title: "Stylesheets"
+      - title: "Howto"
         url: /docs/stylesheets/
-      - title: "JavaScript"
-        url: /docs/javascript/
 
