@@ -17,7 +17,7 @@ classes: wide
 
   <!-- Dropdown to select an existing OpenAPI spec -->
   <select id="spec-select" style="margin: 20px 0; display: block;" onchange="loadSelectedSpec()">
-    <option value="">Select an existing OpenAPI spec (or paste your own json below)</option>
+    <option value="">Select an existing OpenAPI spec (or paste your own JSON below)</option>
 
     <!-- Liquid to dynamically populate the dropdown with JSON files -->
     {% for file in site.static_files %}
@@ -36,26 +36,16 @@ classes: wide
   <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"></script>
   
   <script>
-    // Initialize Swagger UI
-    let ui = SwaggerUIBundle({
-      dom_id: '#swagger-ui',
-      presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-      layout: "BaseLayout",  // Hide the topbar by using the BaseLayout
-    });
+    let ui;  // Declare 'ui' variable for later initialization
 
     // Function to load spec from textarea
     function loadSpec() {
       const spec = document.getElementById('swagger-json').value;
       try {
         const jsonSpec = JSON.parse(spec);
-
-        // Reinitialize Swagger UI with the new spec
-        ui = SwaggerUIBundle({
-          spec: jsonSpec,
-          dom_id: '#swagger-ui',
-          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-          layout: "BaseLayout",  // Hide the topbar here as well
-        });
+        
+        // Initialize or reinitialize Swagger UI with the new spec
+        initializeSwaggerUI(jsonSpec);
       } catch (error) {
         alert("Invalid JSON. Please check your OpenAPI specification.");
       }
@@ -74,18 +64,26 @@ classes: wide
             return response.json();
           })
           .then(jsonSpec => {
-            // Reinitialize Swagger UI with the fetched spec
-            ui = SwaggerUIBundle({
-              spec: jsonSpec,
-              dom_id: '#swagger-ui',
-              presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-              layout: "BaseLayout",  // Hide the topbar here as well
-            });
+            // Initialize or reinitialize Swagger UI with the fetched spec
+            initializeSwaggerUI(jsonSpec);
           })
           .catch(error => {
             alert("Error loading the spec: " + error.message);
           });
       }
+    }
+
+    // Function to initialize Swagger UI
+    function initializeSwaggerUI(spec) {
+      if (ui) {
+        ui.destroy();  // Destroy the existing Swagger UI instance if present
+      }
+      ui = SwaggerUIBundle({
+        spec: spec,
+        dom_id: '#swagger-ui',
+        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+        layout: "BaseLayout",  // Hide the topbar by using the BaseLayout
+      });
     }
   </script>
 </body>
