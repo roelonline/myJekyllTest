@@ -1,17 +1,12 @@
 
 docs:
-  - title: JSON Generators
-    children:
-      - title: "Create Topic/Rolebinding"
-        url: /about/
-  
   - title: Open API specification
     children:
       - title: "Visualizer"
-        url: /openapi/
+        url: /
 
   - title: Help
     children:
       - title: "Howto"
-        url: /docs/stylesheets/
+        url: /howto-openapi/
 

@@ -1,6 +1,6 @@
 ---
 layout: single
-permalink: /openapi/
+permalink: /
 classes: wide
 ---
 
@@ -22,7 +22,7 @@ classes: wide
     <!-- Liquid to dynamically populate the dropdown with JSON files -->
     {% for file in site.static_files %}
       {% if file.path contains '/_pages/OpenAPI/specs/' and file.extname == '.json' %}
-        <option value="../{{ file.path }}">{{ file.name | split: '.' | first }}</option>
+        <option value="./{{ file.path }}">{{ file.name | split: '.' | first }}</option>
       {% endif %}
     {% endfor %}
 
